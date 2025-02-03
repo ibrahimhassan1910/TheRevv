@@ -1,10 +1,14 @@
 from flask import Flask, request, jsonify, session
 from flask_sqlalchemy import SQLAlchemy
+from dotenv import load_dotenv
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from flask_cors import CORS
 import os
 from werkzeug.utils import secure_filename
+
+# Load environment variables from.env file
+load_dotenv()
 
 # Enable CORS
 app = Flask(__name__, static_folder='static')
@@ -15,7 +19,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///car_stats.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['UPLOAD_FOLDER'] = 'static'  # Directory where images will be stored
 app.config['ALLOWED_EXTENSIONS'] = {'png', 'jpg', 'jpeg', 'gif'}
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URI')
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://the_revv_db_user:wK6UORNdsx9LUGd0HLlxL1GpnwoVJ5Ab@dpg-cughuoaj1k6c73dukma0-a.oregon-postgres.render.com/the_revv_db'
 app.secret_key = os.urandom(24)  # Random secret key for sessions
 
 db = SQLAlchemy(app)
